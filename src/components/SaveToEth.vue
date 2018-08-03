@@ -45,7 +45,7 @@
             <div class="card-content">
               <div class="content">
                 <strong>
-                  <a class="card-footer-item" @click="openEtherScan">{{ transactionHash }}</a>
+                  <a class="card-footer-item" @click="openEtherScan">{{ etherscanLink }}</a>
                 </strong>
               </div>
             </div>
@@ -70,6 +70,11 @@ export default {
       message: '',
       byteLength: '',
       transactionHash: ''
+    }
+  },
+  computed: {
+    etherscanLink () {
+      return this.getEtherscanLink()
     }
   },
   async created () {
@@ -122,7 +127,7 @@ export default {
         duration: '600000'
       })
     },
-    openEtherScan () {
+    getEtherscanLink () {
       let url = ''
       switch (this.eth.networId) {
         case 1:
@@ -140,7 +145,10 @@ export default {
         default:
           url = `https://etherscan.io/tx/${this.transactionHash}`
       }
-      window.open(url, '_blank')
+      return url
+    },
+    openEtherScan () {
+      window.open(this.etherscanLink, '_blank')
     }
   },
   watch: {
