@@ -5,10 +5,16 @@
 </template>
 
 <script>
+import Eth from '@/eth'
+
 export default {
   name: 'HelloWorld',
   props: {
-    msg: String
+    msg: String,
+    eth: null
+  },
+  created () {
+    this.eth = new Eth()
   }
 }
 </script>
