@@ -1,6 +1,21 @@
 <template>
-  <div class="hello">
-    Hello
+  <div class="SaveToEth">
+    <section class="hero is-primary is-medium">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Save to Ethereum
+          </h1>
+          <h2 class="subtitle">
+            Permanently
+          </h2>
+          <div>
+            <label for="Network">Network:</label>
+            {{ network }}
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -8,13 +23,17 @@
 import Eth from '@/eth'
 
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String,
-    eth: null
+  name: 'SaveToEth',
+  data () {
+    return {
+      eth: null,
+      network: null
+    }
   },
-  created () {
+  async created () {
     this.eth = new Eth()
+    await this.eth.init()
+    this.network = this.eth.networkName
   }
 }
 </script>
