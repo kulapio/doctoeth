@@ -14,7 +14,6 @@
             <b-field label="Your Message">
               <b-input
                 placeholder="Your message will be saved permanently on Ethereum"
-                maxlength="200"
                 type="textarea"
                 v-model="message"
               ></b-input>

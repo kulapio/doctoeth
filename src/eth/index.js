@@ -63,7 +63,7 @@ class Eth {
       data: this.web3.utils.utf8ToHex(message),
       value: '1000000000000000',
       gasPrice: '1000000000',
-      gasLimit: '500000'
+      gasLimit: '1000000'
     }
     let result = await this.web3.eth.sendTransaction(options)
     return result
