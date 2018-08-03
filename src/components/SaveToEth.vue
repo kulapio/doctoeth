@@ -30,6 +30,27 @@
               </p>
             </b-field>
           </section>
+
+          <div v-if="transactionHash" class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Transaction Hash #
+              </p>
+              <a href="#" class="card-header-icon" aria-label="more options">
+                <span class="icon">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </a>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                <strong>
+                  <a class="card-footer-item" @click="openEtherScan">{{ transactionHash }}</a>
+                </strong>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -47,7 +68,8 @@ export default {
       eth: null,
       network: null,
       message: '',
-      byteLength: ''
+      byteLength: '',
+      transactionHash: ''
     }
   },
   async created () {
@@ -71,7 +93,7 @@ export default {
       // let esimateGasUsed = await this.eth.estimateGas(this.message)
       // console.log(`Estimate Gas Used: ${esimateGasUsed}`)
 
-      this.eth.saveToEthereum(this.message)
+      this.transactionHash = await this.eth.saveToEthereum(this.message)
     },
     validate () {
       if (this.eth.web3 === null) {
@@ -99,6 +121,26 @@ export default {
         type: 'is-danger',
         duration: '600000'
       })
+    },
+    openEtherScan () {
+      let url = ''
+      switch (this.eth.networId) {
+        case 1:
+          url = `https://etherscan.io/tx/${this.transactionHash}`
+          break
+        case 3:
+          url = `https://ropsten.etherscan.io/tx/${this.transactionHash}`
+          break
+        case 4:
+          url = `https://rinkeby.etherscan.io/tx/${this.transactionHash}`
+          break
+        case 42:
+          url = `https://kovan.etherscan.io/tx/${this.transactionHash}`
+          break
+        default:
+          url = `https://etherscan.io/tx/${this.transactionHash}`
+      }
+      window.open(url, '_blank')
     }
   },
   watch: {
@@ -133,5 +175,18 @@ a {
 <style>
 .label {
   color: white !important;
+}
+.card {
+  margin-top: 25px;
+}
+.card-footer-item.share {
+  padding: 0px;
+}
+.card-footer-item.share span {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  color: #7957d5;
+  cursor: pointer;
 }
 </style>

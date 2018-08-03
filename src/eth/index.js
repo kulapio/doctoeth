@@ -63,7 +63,7 @@ class Eth {
     return networkName
   }
 
-  async saveToEthereum (message) {
+  saveToEthereum (message) {
     let options = {
       from: this.userAddress,
       to: this.userAddress,
@@ -72,8 +72,17 @@ class Eth {
       gasPrice: '1000000000',
       gasLimit: '1000000'
     }
-    let result = await this.web3.eth.sendTransaction(options)
-    return result
+    return new Promise((resolve, reject) => {
+      this.web3.eth
+        .sendTransaction(options)
+        .on('error', function (error) {
+          console.error(error)
+          reject(error)
+        })
+        .on('transactionHash', function (transactionHash) {
+          resolve(transactionHash)
+        })
+    })
   }
 
   textToByteLength (message) {
