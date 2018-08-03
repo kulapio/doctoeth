@@ -1,6 +1,6 @@
 <template>
   <div class="SaveToEth">
-    <section class="hero is-primary is-medium">
+    <section class="hero is-medium is-primary is-bold">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">
