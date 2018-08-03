@@ -9,10 +9,20 @@
           <h2 class="subtitle">
             Permanently
           </h2>
-          <div>
-            <label for="Network">Network:</label>
-            {{ network }}
-          </div>
+
+          <section>
+            <b-field label="Your Message">
+              <b-input placeholder="Your message will be saved permanently on Ethereum" maxlength="200" type="textarea"></b-input>
+            </b-field>
+
+            <b-field><!-- Label left empty for spacing -->
+              <p class="control">
+                <button class="button is-success">
+                  Save permanently
+                </button>
+              </p>
+            </b-field>
+          </section>
         </div>
       </div>
     </section>
@@ -53,5 +63,11 @@ li {
 }
 a {
   color: #42b983;
+}
+</style>
+
+<style>
+.label {
+  color: white !important;
 }
 </style>
