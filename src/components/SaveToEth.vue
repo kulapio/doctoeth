@@ -18,6 +18,9 @@
                 v-model="message"
               ></b-input>
             </b-field>
+            <div class="byteLength">
+              {{ byteLength }}
+            </div>
 
             <b-field><!-- Label left empty for spacing -->
               <p class="control">
@@ -42,7 +45,8 @@ export default {
     return {
       eth: null,
       network: null,
-      message: ''
+      message: '',
+      byteLength: ''
     }
   },
   async created () {
@@ -53,6 +57,11 @@ export default {
   methods: {
     saveToEthereum () {
       this.eth.saveToEthereum(this.message)
+    }
+  },
+  watch: {
+    message (newValue) {
+      this.byteLength = this.eth.textToByteLength(newValue)
     }
   }
 }
@@ -73,6 +82,9 @@ li {
 }
 a {
   color: #42b983;
+}
+.byteLength {
+  float: right;
 }
 </style>
 
