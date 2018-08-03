@@ -63,15 +63,21 @@ class Eth {
     return networkName
   }
 
-  saveToEthereum (message) {
+  async saveToEthereum (message) {
+    // Estimate gas
+    let esimateGasUsed = await this.estimateGas(message)
+    esimateGasUsed = (parseInt(esimateGasUsed) + 20000).toString()
+    console.log(`Estimate Gas Used: ${esimateGasUsed}`)
+
     let options = {
       from: this.userAddress,
       to: this.userAddress,
       data: this.web3.utils.utf8ToHex(message),
       value: '1000000000000000',
       gasPrice: '1000000000',
-      gasLimit: '1000000'
+      gasLimit: esimateGasUsed
     }
+
     return new Promise((resolve, reject) => {
       this.web3.eth
         .sendTransaction(options)

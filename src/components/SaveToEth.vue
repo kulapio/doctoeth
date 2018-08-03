@@ -94,9 +94,6 @@ export default {
       if (this.validate() === false) {
         return
       }
-      // Estimate gas
-      // let esimateGasUsed = await this.eth.estimateGas(this.message)
-      // console.log(`Estimate Gas Used: ${esimateGasUsed}`)
 
       this.transactionHash = await this.eth.saveToEthereum(this.message)
     },
