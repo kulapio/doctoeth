@@ -55,7 +55,11 @@ export default {
     this.network = this.eth.networkName
   },
   methods: {
-    saveToEthereum () {
+    async saveToEthereum () {
+      // Estimate gas
+      // let esimateGasUsed = await this.eth.estimateGas(this.message)
+      // console.log(`Estimate Gas Used: ${esimateGasUsed}`)
+
       this.eth.saveToEthereum(this.message)
     }
   },

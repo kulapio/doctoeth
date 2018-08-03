@@ -17,11 +17,14 @@ class Eth {
   createWeb3 () {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.web3 !== 'undefined') {
+      // if (window.web3 === 'bypass') {
       // Use Mist/MetaMask's provider
       return new Web3(window.web3.currentProvider)
     } else {
       console.log('No web3? You should consider trying MetaMask!')
-      return null
+      // return new Web3('ws://localhost:8545')
+      return new Web3('ws://localhost:8545')
+      // return null
     }
   }
 
@@ -72,6 +75,14 @@ class Eth {
   textToByteLength (message) {
     let bytesLength = this.web3.utils.utf8ToHex(message).length / 2 - 1
     return this.humanFileSize(bytesLength)
+  }
+
+  async estimateGas (message) {
+    let gasUsed = await this.web3.eth.estimateGas({
+      to: this.userAddress,
+      data: this.web3.utils.utf8ToHex(message)
+    })
+    return gasUsed
   }
 
   // Helper
