@@ -38,6 +38,7 @@
 
 <script>
 import Eth from '@/eth'
+import { Toast } from 'buefy'
 
 export default {
   name: 'SaveToEth',
@@ -52,15 +53,52 @@ export default {
   async created () {
     this.eth = new Eth()
     await this.eth.init()
+
+    // Validate Metamask
+    if (this.validate() === false) {
+      return
+    }
+
     this.network = this.eth.networkName
   },
   methods: {
     async saveToEthereum () {
+      // Validate Metamask
+      if (this.validate() === false) {
+        return
+      }
       // Estimate gas
       // let esimateGasUsed = await this.eth.estimateGas(this.message)
       // console.log(`Estimate Gas Used: ${esimateGasUsed}`)
 
       this.eth.saveToEthereum(this.message)
+    },
+    validate () {
+      if (this.eth.web3 === null) {
+        this.alertNoWeb3Wallet()
+        return false
+      }
+      if (this.eth.userAddress === '') {
+        this.alertWeb3Login()
+        return false
+      }
+      return true
+    },
+    alertNoWeb3Wallet () {
+      Toast.open({
+        message: 'No MetaMask installed!',
+        position: 'is-bottom',
+        type: 'is-danger',
+        duration: '600000'
+      })
+    },
+    alertWeb3Login () {
+      Toast.open({
+        message: 'Please Login on MetaMask!',
+        position: 'is-bottom',
+        type: 'is-danger',
+        duration: '600000'
+      })
     }
   },
   watch: {

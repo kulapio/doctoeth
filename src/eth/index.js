@@ -10,8 +10,10 @@ class Eth {
 
   async init () {
     this.web3 = this.createWeb3()
-    this.userAddress = await this.getUserAddress()
-    this.networkName = await this.getNetwork()
+    if (this.web3 != null) {
+      this.userAddress = await this.getUserAddress()
+      this.networkName = await this.getNetwork()
+    }
   }
 
   createWeb3 () {
@@ -23,13 +25,15 @@ class Eth {
     } else {
       console.log('No web3? You should consider trying MetaMask!')
       // return new Web3('ws://localhost:8545')
-      return new Web3('ws://localhost:8545')
-      // return null
+      return null
     }
   }
 
   async getUserAddress () {
     let accounts = await this.web3.eth.getAccounts()
+    if (accounts.length === 0) {
+      return ''
+    }
     return accounts[0]
   }
 
