@@ -34,7 +34,7 @@
           <div v-if="transactionHash" class="card">
             <header class="card-header">
               <p class="card-header-title">
-                Transaction Hash #
+                View on Etherscan
               </p>
               <a href="#" class="card-header-icon" aria-label="more options">
                 <span class="icon">
