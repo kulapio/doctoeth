@@ -10,6 +10,13 @@ export default new Router({
       path: '/',
       name: 'SaveToEth',
       component: Home
+    },
+    {
+      path: '/github',
+      name: 'github',
+      beforeEnter () {
+        location.href = 'https://github.com/kulapio/doctoeth'
+      }
     }
   ]
 })
