@@ -5,10 +5,12 @@ class Eth {
     this.web3 = null
     this.networId = 0
     this.networkName = ''
+    this.userAddress = ''
   }
 
   async init () {
     this.web3 = this.createWeb3()
+    this.userAddress = await this.getUserAddress()
     this.networkName = await this.getNetwork()
   }
 
@@ -21,6 +23,11 @@ class Eth {
       console.log('No web3? You should consider trying MetaMask!')
       return null
     }
+  }
+
+  async getUserAddress () {
+    let accounts = await this.web3.eth.getAccounts()
+    return accounts[0]
   }
 
   async getNetwork () {
@@ -47,6 +54,19 @@ class Eth {
         networkName = 'Unknown'
     }
     return networkName
+  }
+
+  async saveToEthereum (message) {
+    let options = {
+      from: this.userAddress,
+      to: this.userAddress,
+      data: this.web3.utils.utf8ToHex(message),
+      value: '1000000000000000',
+      gasPrice: '1000000000',
+      gasLimit: '500000'
+    }
+    let result = await this.web3.eth.sendTransaction(options)
+    return result
   }
 }
 

@@ -12,12 +12,17 @@
 
           <section>
             <b-field label="Your Message">
-              <b-input placeholder="Your message will be saved permanently on Ethereum" maxlength="200" type="textarea"></b-input>
+              <b-input
+                placeholder="Your message will be saved permanently on Ethereum"
+                maxlength="200"
+                type="textarea"
+                v-model="message"
+              ></b-input>
             </b-field>
 
             <b-field><!-- Label left empty for spacing -->
               <p class="control">
-                <button class="button is-success">
+                <button class="button is-success" @click="saveToEthereum">
                   Save permanently
                 </button>
               </p>
@@ -37,13 +42,19 @@ export default {
   data () {
     return {
       eth: null,
-      network: null
+      network: null,
+      message: ''
     }
   },
   async created () {
     this.eth = new Eth()
     await this.eth.init()
     this.network = this.eth.networkName
+  },
+  methods: {
+    saveToEthereum () {
+      this.eth.saveToEthereum(this.message)
+    }
   }
 }
 </script>
