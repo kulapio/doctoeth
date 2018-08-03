@@ -7,11 +7,11 @@
             Save Message on Ethereum
           </h1>
           <h2 class="subtitle">
-            Permanently
+            (Permanently)
           </h2>
 
           <section>
-            <b-field label="Your Message">
+            <b-field label="">
               <b-input
                 placeholder="Your message will be saved permanently on Ethereum"
                 type="textarea"
