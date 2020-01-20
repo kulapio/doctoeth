@@ -85,7 +85,7 @@ class Eth {
       from: this.userAddress,
       to: this.userAddress,
       data: this.web3.utils.utf8ToHex(message),
-      value: '1000000000000000',
+      value: '0',
       gasPrice: '1000000000',
       gasLimit: esimateGasUsed
     }
