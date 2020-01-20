@@ -9,23 +9,35 @@ class Eth {
   }
 
   async init () {
-    this.web3 = this.createWeb3()
+    this.web3 = await this.createWeb3()
     if (this.web3 != null) {
       this.userAddress = await this.getUserAddress()
       this.networkName = await this.getNetwork()
     }
   }
 
-  createWeb3 () {
-    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-    if (typeof window.web3 !== 'undefined') {
-      // if (window.web3 === 'bypass') {
-      // Use Mist/MetaMask's provider
-      return new Web3(window.web3.currentProvider)
-    } else {
-      console.log('No web3? You should consider trying MetaMask!')
-      // return new Web3('ws://localhost:8545')
-      return null
+  async createWeb3 () {
+    // Modern dapp browsers...
+    if (window.ethereum) {
+      try {
+        // Request account access if needed
+        await window.ethereum.enable()
+        return new Web3(window.ethereum)
+      } catch (err) {
+        console.log(err)
+      }
+    // Legacy dapp browsers, checking if Web3 has been injected by the browser (Mist/MetaMask)
+    } else if (typeof window.web3 !== 'undefined') {
+      // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+      if (typeof window.web3 !== 'undefined') {
+        // if (window.web3 === 'bypass') {
+        // Use Mist/MetaMask's provider
+        return new Web3(window.web3.currentProvider)
+      } else {
+        console.log('No web3? You should consider trying MetaMask!')
+        // return new Web3('ws://localhost:8545')
+        return null
+      }
     }
   }
 
